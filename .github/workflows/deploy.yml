@@ -1,0 +1,39 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ] # 當推送到 main 分支時觸發
+  pull_request:
+    branches: [ main ] # 當對 main 分支建立 PR 時觸發
+  workflow_dispatch: # 手動觸發
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 檢查出存儲庫代碼
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 設置 Node.js 環境
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16' # 適配您專案的 Node.js 版本
+        cache: 'npm' # 啟用 npm 緩存，加速依賴安裝
+
+    # 安裝依賴
+    - name: Install dependencies
+      run: npm ci
+
+    # 建置專案
+    - name: Build website
+      run: npm run build
+
+    # 部屬到 GitHub Pages
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: dist # Vite 輸出目錄
+        branch: gh-pages # 部屬目標分支
