@@ -20,7 +20,7 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16' # 請根據專案需求設置 Node.js 版本
+        node-version: '18' # 請根據專案需求設置 Node.js 版本
         cache: 'yarn' # 啟用 Yarn 緩存，加速依賴安裝
 
     # 安裝依賴
