@@ -3,5 +3,9 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "compilerOptions": {
+    "composite": true, // 確保可以正確編譯引用的子專案
+    "skipLibCheck": true // 跳過庫檔案檢查，減少型別檢查的問題
+  }
 }

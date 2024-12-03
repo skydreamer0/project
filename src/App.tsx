@@ -1,62 +1,91 @@
-import React, { useState } from 'react';
-import { Clock8 } from 'lucide-react';
+import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import { FortuneForm } from './components/FortuneForm';
 import { FortuneResult } from './components/FortuneResult';
-import { getChineseTime, convertToSingleDigit } from './utils/dateUtils';
+import { Fortune, FortuneFormData, LunarDateInfo } from './types';
+import { convertToLunarDate } from './utils/dateUtils';
 import { calculateFortune } from './utils/fortuneUtils';
-import { FortuneFormData, Fortune } from './types';
+import { Background } from './components/Background';
+import { Navbar } from './components/Navbar';
+import { motion, AnimatePresence } from 'framer-motion';
 
-function App() {
-  const [results, setResults] = useState<{
-    fortunes: Fortune[];
-    chineseTime: string;
-  } | null>(null);
+const App: React.FC = () => {
+  const { t } = useTranslation();
+  const [fortunes, setFortunes] = React.useState<Fortune[]>([]);
+  const [chineseTime, setChineseTime] = React.useState<string>('');
+  const [lunarInfo, setLunarInfo] = React.useState<LunarDateInfo | null>(null);
 
   const handleSubmit = (data: FortuneFormData) => {
     const date = new Date(data.date + 'T' + data.time);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
+    const lunarInfo = convertToLunarDate(date, data.timezone);
+    
+    const fortunes = calculateFortune(
+      lunarInfo.lunarMonth,
+      lunarInfo.lunarDay,
+      lunarInfo.hour
+    );
 
-    const chineseTime = getChineseTime(hour);
-    const monthNumber = convertToSingleDigit(month);
-    const dayNumber = convertToSingleDigit(day);
-    const timeNumber = convertToSingleDigit(hour);
+    setFortunes(fortunes);
+    setChineseTime(lunarInfo.chineseTime);
+    setLunarInfo(lunarInfo);
+  };
 
-    const fortunes = calculateFortune(monthNumber, dayNumber, timeNumber);
-    setResults({ fortunes, chineseTime });
+  const handleReset = () => {
+    setFortunes([]);
+    setChineseTime('');
+    setLunarInfo(null);
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <div className="flex justify-center mb-4">
-            <Clock8 className="h-12 w-12 text-indigo-600" />
-          </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Chinese Fortune Teller
-          </h1>
-          <p className="text-lg text-gray-600">
-            Discover your fortune based on traditional Chinese time calculations
-          </p>
-        </div>
+    <div className="min-h-screen bg-amber-50">
+      <Background />
+      <Navbar />
+      
+      <main className="container mx-auto px-4 pt-20 sm:pt-24 pb-8">
+        <div className="max-w-2xl mx-auto space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <h1 className="text-3xl sm:text-4xl font-bold text-center text-amber-900 mb-2">
+              {t('title')}
+            </h1>
+            <p className="text-amber-800 text-center mb-8">
+              {t('subtitle')}
+            </p>
+          </motion.div>
 
-        <div className="bg-white rounded-lg shadow-xl p-6 md:p-8 space-y-8">
           <FortuneForm onSubmit={handleSubmit} />
-          
-          {results && (
-            <div className="mt-8 pt-8 border-t border-gray-200">
-              <FortuneResult
-                fortunes={results.fortunes}
-                chineseTime={results.chineseTime}
-              />
-            </div>
-          )}
+
+          <AnimatePresence mode="wait">
+            {fortunes.length > 0 && (
+              <motion.div
+                key="fortune-results"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <FortuneResult
+                  fortunes={fortunes}
+                  chineseTime={chineseTime}
+                  lunarInfo={lunarInfo}
+                />
+                <div className="mt-8 text-center">
+                  <button
+                    onClick={handleReset}
+                    className="inline-flex items-center px-6 py-2 border-2 border-amber-600 rounded-lg text-amber-700 hover:bg-amber-50 transition-colors duration-200"
+                  >
+                    {t('recalculate')}
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </div>
+      </main>
     </div>
   );
-}
+};
 
 export default App;

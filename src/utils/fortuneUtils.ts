@@ -13,9 +13,14 @@ export const fortuneMap: Record<number, Fortune> = {
 };
 
 export const calculateFortune = (month: number, day: number, time: number): Fortune[] => {
+  // 第一個結果：直接用月份取餘
   const firstResult = month % 9 || 9;
-  const secondResult = (month + day) % 9 || 9;
-  const thirdResult = (month + day + time) % 9 || 9;
+  
+  // 第二個結果：(月份 + 日期 - 1) % 9
+  const secondResult = ((month + day - 1) % 9) || 9;
+  
+  // 第三個結果：(月份 + 日期 + 時辰 - 1) % 9
+  const thirdResult = ((month + day + time - 1) % 9) || 9;
 
   return [
     fortuneMap[firstResult],
