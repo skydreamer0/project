@@ -17,6 +17,19 @@ export const enUS = {
     footer: {
       disclaimer: 'Based on traditional I Ching and Ba Zi • For reference only',
       copyright: '© {{year}} Fortune Timing'
+    },
+    form: {
+      date: {
+        label: 'Select Date'
+      },
+      time: {
+        label: 'Select Time'
+      },
+      location: {
+        label: 'Select Location',
+        placeholder: 'Type city or country name'
+      },
+      submit: 'Start Fortune Telling'
     }
   }
 };

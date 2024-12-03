@@ -1,6 +1,6 @@
 export const deDE = {
   translation: {
-    title: 'Zeitberechnung',
+    title: 'Schicksalsberechnung',
     subtitle: 'Zeitberechnung basierend auf traditionellem I Ging',
     lunarDate: 'Mondkalender',
     zodiac: 'Tierkreiszeichen',
@@ -12,11 +12,24 @@ export const deDE = {
     chineseHour: 'Chinesische Stunde',
     selectDate: 'Datum auswählen',
     selectTime: 'Zeit auswählen',
-    selectLocation: 'Standort auswählen',
+    selectLocation: 'Ort auswählen',
     locationHint: 'Wählen Sie Ihre Stadt für eine genaue Zeitberechnung',
     footer: {
-      disclaimer: 'Basierend auf traditionellem I Ging und Ba Zi • Nur als Referenz',
-      copyright: '© {{year}} Zeitberechnung'
+      disclaimer: 'Basierend auf traditionellem I Ging und Ba Zi • Nur zur Referenz',
+      copyright: '© {{year}} Schicksalsberechnung'
+    },
+    form: {
+      date: {
+        label: 'Datum auswählen'
+      },
+      time: {
+        label: 'Zeit auswählen'
+      },
+      location: {
+        label: 'Ort auswählen',
+        placeholder: 'Stadt oder Land eingeben'
+      },
+      submit: 'Schicksalsberechnung starten'
     }
   }
 };

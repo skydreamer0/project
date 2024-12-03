@@ -13,8 +13,13 @@ export interface Fortune {
 }
 
 export interface City {
-  name: string;
-  country: string;
+  name: {
+    [key: string]: string;
+  };
+  country: {
+    [key: string]: string;
+  };
+  searchTerms: string[];
   timezone: string;
   latitude: number;
   longitude: number;

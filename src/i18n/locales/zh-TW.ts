@@ -17,6 +17,19 @@ export const zhTW = {
     footer: {
       disclaimer: '根據傳統易經與八字學說推算 • 僅供參考',
       copyright: '© {{year}} 時機推算'
+    },
+    form: {
+      date: {
+        label: '選擇日期'
+      },
+      time: {
+        label: '選擇時間'
+      },
+      location: {
+        label: '選擇地點',
+        placeholder: '輸輸入城市或國家名稱'
+      },
+      submit: '開始占卜'
     }
   }
 };
