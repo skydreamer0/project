@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- 外圓邊框 -->
+  <circle cx="256" cy="256" r="240" fill="#d4f0d0" stroke="#8ccbb8" stroke-width="16"/>
+  
+  <!-- 八卦核心 -->
+  <g fill="#ffd700">
+    <rect x="240" y="96" width="32" height="96"/>
+    <rect x="240" y="320" width="32" height="96"/>
+    <rect x="96" y="240" width="96" height="32"/>
+    <rect x="320" y="240" width="96" height="32"/>
+    <rect x="320" y="128" width="32" height="64"/>
+    <rect x="160" y="128" width="32" height="64"/>
+    <rect x="320" y="320" width="32" height="64"/>
+    <rect x="160" y="320" width="32" height="64"/>
+  </g>
+  
+  <!-- 內圓羅盤 -->
+  <circle cx="256" cy="256" r="120" fill="none" stroke="#8ccbb8" stroke-width="8"/>
+
+  <!-- 中心點 -->
+  <circle cx="256" cy="256" r="16" fill="#ffcc00"/>
+</svg>
